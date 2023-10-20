@@ -75,3 +75,24 @@ while [ $x != "q" ]; do
                                 awk -F',' -v codi_p="$codi_p" -v codi_e="$codi_e" '{if ($7==codi_p && $4==codi_e) print $2, $11}' cities.csv
                         fi
                         ;;
+                "ej9")
+                        Nou=$(awk -F',' -v codi_e="$codi_e" -v codi_p="$codi_p" '{if ($7 == codi_p && $4 == codi_e) print $2, $11}' cities.csv | uniq)
+                        if [ -z "$Nou" ]; then
+                                echo "Hi ha un error, reintenta-ho des del principi"
+                        else
+                                awk -F',' -v codi_e="$codi_e" -v codi_p="$codi_p" '{if ($7 == codi_p && $4 == codi_e) print $2, $11}' cities.csv | uniq > ${codi_p}_${codi_e}.csv
+                        fi
+                        ;;
+
+                "gwd")
+                        read -p "Introdueix la població d'un estat: " CADENA
+                        wdid=$(awk -F',' -v codi_e="$codi_e" -v codi_p="$codi_p" -v CADENA="$CADENA" '{if ($7 == codi_p && $4 == codi_e && $2 == CADENA ) print $11}' cities.csv | uniq)
+                        if [ -z "$wdid" ]; then
+                                echo "Hi ha un error, reintenta-ho des del principi"
+                        else
+                                curl https://www.wikidata.org/wiki/Special:EntityData/$wdid.json > "$wdid".json
+                                echo "S'ha guardat a $wdid.json"
+                        fi
+                        ;;
+
+Afegim dos exercicis mésvim FI_practica_1.sh 
