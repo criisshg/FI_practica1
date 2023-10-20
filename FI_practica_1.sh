@@ -49,4 +49,29 @@ while [ $x != "q" ]; do
                                 awk -F',' -v codi_p="$codi_p" '$7==codi_p {print $4, $5}' cities.csv | uniq
                         fi
                         ;;
+                "lcp")
+                        Sis=$(awk -F',' -v codi_p="$codi_p" '$7==codi_p {print $2, $11}' cities.csv)
+                        if [ -z "$Sis" ]; then
+                                echo "Hi ha un error, reintenta-ho des del principi"
+                        else
+                                awk -F',' -v codi_p="$codi_p" '$7==codi_p {print $2, $11}' cities.csv
+                        fi
+                        ;;
 
+                "ecp")
+                        Set=$(awk -F',' -v codi_p="$codi_p" '$7==codi_p {print $2, $11}' cities.csv | uniq)
+                        if [ -z "$Set" ]; then
+                                echo "Hi ha un error, reintenta-ho des del principi"
+                        else
+                                awk -F',' -v codi_p="$codi_p" '$7==codi_p {print $2, $11}' cities.csv | uniq > ${codi_p}.csv
+                                echo "S'ha guardat a ${codi_p}.csv"
+                        fi
+                        ;;
+                "lce")
+                        Vuit=$(awk -F',' -v codi_p="$codi_p" -v codi_e="$codi_e" '{if ($7==codi_p && $4==codi_e) print $2, $11}' cities.csv)
+                        if [ -z "$Vuit" ]; then
+                                echo "Hi ha un error, reintenta-ho des del principi"
+                        else
+                                awk -F',' -v codi_p="$codi_p" -v codi_e="$codi_e" '{if ($7==codi_p && $4==codi_e) print $2, $11}' cities.csv
+                        fi
+                        ;;
