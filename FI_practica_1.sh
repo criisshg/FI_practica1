@@ -94,5 +94,25 @@ while [ $x != "q" ]; do
                                 echo "S'ha guardat a $wdid.json"
                         fi
                         ;;
+                "est")
+                        V1=0.0
+                        V2=0.0
+                        V3=0.0
+                        V4=0.0
+                        V5=0.0
+                        V6=0.0
+                        awk -F',' -v V1=$V1 -v V2=$V2 -v V3=$V3 -v V4=$V4 -v V5=$V5 -v V6=$V6 '{V1+=($9>0);V2+=($9<0);V3+=($10>0);V4+=($10<0);V5+=($9==0 && $10==0);V6+=($11=="")} END {print "Nord", V1, "Sud", V2, "Est", V3, "Oest", V4, "No ubic", V5, "No WDId", V6}' cities.csv
+                        ;;
+                *)
+                        echo "Opció no vàlida"
+                        ;;
 
-Afegim dos exercicis mésvim FI_practica_1.sh 
+
+
+
+
+
+        esac
+
+done
+
